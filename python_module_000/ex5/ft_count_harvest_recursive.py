@@ -10,6 +10,3 @@ def ft_count_harvest_recursive():
     day = int(input("Days until harvest: "))
     rec = 1
     ft_recursive(day, rec)
-
-
-ft_count_harvest_recursive()
