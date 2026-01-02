@@ -10,6 +10,10 @@ class Plant():
     def ft_grow(self):
         self.height += 1
 
+    def ft_pass_day(self):
+        self.ft_grow()
+        self.ft_age()
+
     def ft_get_info(self):
         print(f"{self.name}: {self.height}cm, {self.age} days old")
 
@@ -19,11 +23,8 @@ if __name__ == "__main__":
     print("=== Day 1 ===")
     rose.ft_get_info()
     now = rose.height
-    loop = 0
-    while loop < 6:
-        rose.ft_grow()
-        rose.ft_age()
-        loop += 1
+    for day in range(1, 7):
+        rose.ft_pass_day()
 
     print("=== Day 7 ===")
     rose.ft_get_info()
