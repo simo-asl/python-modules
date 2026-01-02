@@ -7,7 +7,7 @@ class Plant:
         self.age = age
         Plant.total += 1
 
-    def print_p(self):
+    def print_plant(self):
         print(
             "Created: ",
             self.name,
@@ -21,14 +21,13 @@ class Plant:
 
 
 if __name__ == "__main__":
-    p1 = Plant("Rose", 25, 30)
-    p2 = Plant("Oak", 200, 365)
-    p3 = Plant("Cactus", 5, 90)
-    p4 = Plant("Sunflower", 80, 45)
-    p5 = Plant("Fern", 15, 120)
-    p1.print_p()
-    p2.print_p()
-    p3.print_p()
-    p4.print_p()
-    p5.print_p()
+    plants = [
+        Plant("Rose", 25, 30),
+        Plant("Oak", 200, 365),
+        Plant("Cactus", 5, 90),
+        Plant("Sunflower", 80, 45),
+        Plant("Fern", 15, 120)
+    ]
+    for plant in plants:
+        plant.print_plant()
     print("Total plants created:", Plant.total)
