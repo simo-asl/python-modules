@@ -16,12 +16,12 @@ class Plant():
 
 
 if __name__ == "__main__":
-    p1 = Plant("Rose", 25, 30)
-    p2 = Plant("Sunflower", 80, 45)
-    p3 = Plant("Cactus", 15, 120)
-    p4 = Plant("Ma3dnouss", 10, 17)
+    plants = [
+        Plant("Rose", 25, 30),
+        Plant("Sunflower", 80, 45),
+        Plant("Cactus", 15, 120),
+        Plant("Ma3dnouss", 10, 17)
+    ]
     print("=== Garden Plant Registry ===")
-    p1.ft_print()
-    p2.ft_print()
-    p3.ft_print()
-    p4.ft_print()
+    for plant in plants:
+        plant.ft_print()
