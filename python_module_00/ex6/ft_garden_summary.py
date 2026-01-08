@@ -3,4 +3,4 @@ def ft_garden_summary():
     plants = int(input("Enter number of plants: "))
     print("Garden:", name)
     print("Plants:", plants)
-    print("Status: growing well!")
+    print("Status: Growing well!")
