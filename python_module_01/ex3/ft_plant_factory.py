@@ -10,6 +10,7 @@ class Plant:
 
 
 if __name__ == "__main__":
+    print("=== Plant Factory Output ===")
     plants = [
         Plant("Rose", 25, 30),
         Plant("Oak", 200, 365),
@@ -17,4 +18,4 @@ if __name__ == "__main__":
         Plant("Sunflower", 80, 45),
         Plant("Fern", 15, 120)
     ]
-    print("Total plants created:", Plant.total)
+    print("\nTotal plants created:", Plant.total)
