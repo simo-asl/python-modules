@@ -6,18 +6,7 @@ class Plant:
         self.height = height
         self.age = age
         Plant.total += 1
-
-    def print_plant(self):
-        print(
-            "Created: ",
-            self.name,
-            "(",
-            self.height,
-            "cm, ",
-            self.age,
-            " days)",
-            sep=""
-        )
+        print(f"Created: {self.name} ({self.height}cm, {self.age} days)")
 
 
 if __name__ == "__main__":
@@ -28,6 +17,4 @@ if __name__ == "__main__":
         Plant("Sunflower", 80, 45),
         Plant("Fern", 15, 120)
     ]
-    for plant in plants:
-        plant.print_plant()
     print("Total plants created:", Plant.total)
