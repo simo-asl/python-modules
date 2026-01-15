@@ -5,7 +5,7 @@ class SecurePlant:
         self.__age = 0
         self.set_height(height)
         self.set_age(age)
-        print(f"Plant reated: {self.name}")
+        print(f"Plant Created: {self.name}")
 
     def set_height(self, cm):
         if cm < 0:
@@ -24,7 +24,7 @@ class SecurePlant:
             print("Security: Negative age rejected\n")
         else:
             self.__age = age
-            print(f"Height updated: {age}cm [OK]")
+            print(f"Age updated: {age} days [OK]")
 
     def get_age(self):
         return self.__age

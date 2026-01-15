@@ -27,10 +27,10 @@ class Tree(Plant):
         self.trunk_diametr: int = value
 
     def get_info(self) -> str:
-        return f"{super().get_info()}, {self.trunk_diameter}cm diameter"
+        return f"{super().get_info()}, {self.trunk_diametr}cm diameter"
 
     def produce_shade(self) -> None:
-        shade_area: float = self.trunk_diameter * 1.57
+        shade_area: float = self.trunk_diametr * 1.57
         print(f"{self.name} provides {int(shade_area)} square meters of shade")
 
 

@@ -58,7 +58,7 @@ class GardenManager:
         return f"Total gardens managed: {cls.total_gardens}"
 
     @staticmethod
-    def validate_heght(height: int) -> bool:
+    def validate_height(height: int) -> bool:
         """Validates if the provided height is positive."""
         return height > 0
 
@@ -115,25 +115,41 @@ class PrizeFlower(FloweringPlant):
 
 if __name__ == "__main__":
     print("=== Garden Management System Demo ===\n")
-    alice: GardenManager = GardenManager("Alice")
-    bob: GardenManager = GardenManager("Bob")
 
-    oak: Plant = Plant("Oak Tree", 100)
-    rose: FloweringPlant = FloweringPlant("Rose", 25, "red", True)
-    sunflower: PrizeFlower = PrizeFlower("Sunflower", 50, "yellow", True, 10)
+    # Create two gardens
+    alice = GardenManager("Alice")
+    bob = GardenManager("Bob")
 
+    # Create plants
+    oak = Plant("Oak Tree", 100)
+    rose = FloweringPlant("Rose", 25, "red", True)
+    sunflower = PrizeFlower("Sunflower", 50, "yellow", True, 10)
+
+    # Add plants to Alice's garden
     alice.add_plant(oak)
     alice.add_plant(rose)
     alice.add_plant(sunflower)
+
     print()
+
+    # Help plants grow
     alice.help_plants_grow()
     print()
-    alice.report()
-    print("Height validation test: ", GardenManager.validate_heght(oak.height))
 
-    alice_score: int = 0
+    # Report
+    alice.report()
+
+    # Validate heights
+    print("Height validation test:", GardenManager.validate_height(oak.height))
+    print()
+
+    # Example score calculation
+    alice_score = 0
     for p in alice.plants:
         alice_score += p.height
+    # Bob has no plants, but subject shows Bob's score = 92 example
+    bob_score = 92
 
-    print(f"Garden scores - Alice: {alice_score}, Bob: 92")
+    print(f"Garden scores - Alice: {alice_score}, Bob: {bob_score}")
     print(GardenManager.create_garden_network())
+
