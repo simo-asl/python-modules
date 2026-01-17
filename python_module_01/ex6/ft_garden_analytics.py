@@ -113,18 +113,23 @@ def main() -> None:
     rose = FloweringPlant("Rose", 25, "red", True)
     sunflower = PrizeFlower("Sunflower", 50, "yellow", True, 10)
 
+    oak_bob = Plant("Oak Tree", 100)
+    rose_bob = FloweringPlant("Rose", 25, "red", True)
+    sunflower_bob = PrizeFlower("Sunflower", 50, "yellow", True, 10)
+
     alice.add_plant(oak)
     alice.add_plant(rose)
     alice.add_plant(sunflower)
     print()
 
-    bob.add_plant(oak)
-    bob.add_plant(rose)
-    bob.add_plant(sunflower)
+    bob.add_plant(oak_bob)
+    bob.add_plant(rose_bob)
+    bob.add_plant(sunflower_bob)
     print()
 
     alice.help_plants_grow()
     print()
+
     bob.help_plants_grow()
     print()
 

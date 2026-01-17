@@ -19,15 +19,24 @@ class Plant:
 
 
 if __name__ == "__main__":
-    rose = Plant("Rose", 25, 30)
+    plants: list[Plant] = [
+        Plant("Rose", 25, 30),
+        Plant("Sunflower", 80, 45),
+        Plant("Cactus", 15, 120),
+    ]
 
     print("=== Day 1 ===")
-    rose.ft_get_info()
+    for p in plants:
+        p.ft_get_info()
 
-    start_height: int = rose.height
-    for _day in range(1, 7):
-        rose.ft_pass_day()
+    start_heights: dict[str, int] = {p.name: p.height for p in plants}
+
+    for day in range(7):
+        for p in plants:
+            p.ft_pass_day()
 
     print("=== Day 7 ===")
-    rose.ft_get_info()
-    print(f"Growth this week: +{rose.height - start_height}cm")
+    for p in plants:
+        p.ft_get_info()
+        growth: int = p.height - start_heights[p.name]
+        print(f"Growth this week: +{growth}cm")

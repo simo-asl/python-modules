@@ -5,8 +5,10 @@ class Plant:
         self._age: int = age
 
     def get_info(self) -> str:
-        return f"{self.name} ({self.__class__.__name__}): {self._height}cm," +\
-            f" {self._age} days"
+        return (
+                f"{self.name} ({self.__class__.__name__}): "
+                f"{self._height}cm, {self._age} days"
+            )
 
 
 class Flower(Plant):
@@ -58,17 +60,14 @@ class Vegetable(Plant):
 if __name__ == "__main__":
     print("=== Garden Plant Types ===")
 
-    rose: Flower = Flower("Rose", 25, 30, "red")
-    oak: Tree = Tree("Oak", 500, 1825, 50)
-    tomato: Vegetable = Vegetable("Tomato", 80, 90, "summer", "vitamin C")
+    rose1: Flower = Flower("Rose", 25, 30, "red")
+    rose2: Flower = Flower("Tulip", 20, 25, "yellow")
 
-    print(rose.get_info())
-    rose.bloom()
-    print()
+    oak1: Tree = Tree("Oak", 500, 1825, 50)
+    oak2: Tree = Tree("Pine", 350, 1200, 35)
 
-    print(oak.get_info())
-    oak.produce_shade()
-    print()
+    tomato1: Vegetable = Vegetable("Tomato", 80, 90, "summer", "vitamin C")
+    tomato2: Vegetable = Vegetable("Carrot", 30, 60, "winter", "beta-carotene")
 
-    print(tomato.get_info())
-    tomato.nutritional_value()
+    for p in [rose1, rose2, oak1, oak2, tomato1, tomato2]:
+        print(p.get_info())
