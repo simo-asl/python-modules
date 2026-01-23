@@ -28,8 +28,8 @@ def test_error_types() -> None:
     print("Testing FileNotFoundError...")
     try:
         garden_operations("file")
-    except FileNotFoundError:
-        print("Caught FileNotFoundError: No such file 'missing.txt'")
+    except (FileNotFoundError, Exception) as error:
+        print(error)
 
     print("Testing KeyError...")
     try:
