@@ -14,7 +14,7 @@ class GardenManager:
     def __init__(self) -> None:
         self.plants: list[str] = []
 
-    def add_plant(self, name: str) -> None:
+    def add_plants(self, name: str) -> None:
         if not name:
             raise PlantError("Plant name cannot be empty!")
         self.plants += [name]
@@ -51,9 +51,9 @@ def test_garden_management() -> None:
 
     print("Adding plants...")
     try:
-        garden_manager.add_plant("tomato")
-        garden_manager.add_plant("lettuce")
-        garden_manager.add_plant("")
+        garden_manager.add_plants("tomato")
+        garden_manager.add_plants("lettuce")
+        garden_manager.add_plants("")
     except GardenError as error:
         print(f"Caught error: {error}")
 
@@ -61,7 +61,7 @@ def test_garden_management() -> None:
     try:
         garden_manager.check_plant_health("tomato", 5, 8)
         garden_manager.check_plant_health("lettuce", 15, 10)
-    except GardenError as error:
+    except (GardenError, Exception) as error:
         print(f"Caught error: {error}")
 
     print("\nWatering plants...")
