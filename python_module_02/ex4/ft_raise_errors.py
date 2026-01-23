@@ -1,7 +1,6 @@
 def check_plant_health(
         plant_name: str, water_level: int, sunlight_hours: int
         ) -> str:
-
     if not plant_name:
         raise ValueError("Plant name cannot be empty!")
     if water_level < 1:
@@ -24,29 +23,29 @@ def test_plant_checks() -> None:
     try:
         message = check_plant_health("tomato", 5, 8)
         print(message)
-    except ValueError as e:
-        print(f"Error: {e}\n")
+    except (ValueError, Exception) as error:
+        print(f"Error: {error}\n")
 
     print("\nTesting empty plant name...")
     try:
         message = check_plant_health("", 5, 8)
         print(message)
-    except ValueError as e:
-        print(f"Error: {e}\n")
+    except (ValueError, Exception) as error:
+        print(f"Error: {error}\n")
 
     print("\nTesting bad water level...")
     try:
         message = check_plant_health("tomato", 15, 8)
         print(message)
-    except ValueError as e:
-        print(f"Error: {e}\n")
+    except (ValueError, Exception) as error:
+        print(f"Error: {error}\n")
 
     print("\nTesting bad sunlight hours...")
     try:
         message = check_plant_health("tomato", 5, 0)
         print(message)
-    except ValueError as e:
-        print(f"Error: {e}\n")
+    except (ValueError, Exception) as error:
+        print(f"Error: {error}\n")
 
     print("All error raising tests completed!")
 
