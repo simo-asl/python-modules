@@ -81,7 +81,7 @@ def print_report(inventory: dict[str, int]) -> None:
 
     total = total_quantity(inventory)
     print(f"Total items in inventory: {total}")
-    print(f"Unique item types: {len(inventory)}")
+    print(f"Unique item types: {len(inventory)}\n")
 
     print("=== Current Inventory ===")
     if not inventory:
@@ -93,7 +93,7 @@ def print_report(inventory: dict[str, int]) -> None:
             pct = (qty / total) * 100.0 if total > 0 else 0.0
             print(f"{name}: {qty} {unit_word(qty)} ({pct:.1f}%)")
 
-    print("=== Inventory Statistics ===")
+    print("\n=== Inventory Statistics ===")
     mm = most_least_abundant(inventory)
     if mm is None:
         print("Most abundant: (none)")
@@ -103,16 +103,16 @@ def print_report(inventory: dict[str, int]) -> None:
         print(f"Most abundant: {most_name} ({most_qty} units)")
         print(
             f"Least abundant: {least_name} "
-            f"({least_qty} {unit_word(least_qty)})"
+            f"({least_qty} {unit_word(least_qty)})\n"
             )
 
     print("=== Item Categories ===")
     moderate, scarce = categorize_subject(inventory)
     print(f"Moderate: {moderate}")
-    print(f"Scarce: {scarce}")
+    print(f"Scarce: {scarce}\n")
 
     print("=== Management Suggestions ===")
-    print(f"Restock needed: {restock_list(inventory)}")
+    print(f"Restock needed: {restock_list(inventory)}\n")
 
     print("=== Dictionary Properties Demo ===")
     print(f"Dictionary keys: {list(inventory.keys())}")
