@@ -4,6 +4,7 @@ import sys
 def parse_token(token: str) -> tuple[str, int] | None:
     if ":" not in token:
         return None
+
     name, qty_str = token.split(":", 1)
     name = name.strip()
     qty_str = qty_str.strip()
@@ -49,19 +50,26 @@ def most_least_abundant(
     return most_name, most_qty, least_name, least_qty
 
 
-def categorize(inventory: dict[str, int]) -> dict[str, dict[str, int]]:
-    cats: dict[str, dict[str, int]] = {
-        "abundant": {}, "moderate": {}, "scarce": {}}
+def unit_word(qty: int) -> str:
+    return "unit" if qty == 1 else "units"
+
+
+def categorize_subject(
+        inventory: dict[str, int]) -> tuple[dict[str, int], dict[str, int]]:
+    if not inventory:
+        return {}, {}
+
+    most_name, most_qty = max(
+        inventory.items(), key=lambda kv: kv[1])
+
+    moderate: dict[str, int] = {most_name: most_qty}
+    scarce: dict[str, int] = {}
 
     for name, qty in inventory.items():
-        if qty >= 4:
-            cats["abundant"][name] = qty
-        elif qty >= 2:
-            cats["moderate"][name] = qty
-        else:
-            cats["scarce"][name] = qty
+        if name != most_name:
+            scarce[name] = qty
 
-    return cats
+    return moderate, scarce
 
 
 def restock_list(inventory: dict[str, int]) -> list[str]:
@@ -73,7 +81,7 @@ def print_report(inventory: dict[str, int]) -> None:
 
     total = total_quantity(inventory)
     print(f"Total items in inventory: {total}")
-    print(f"Unique items: {len(inventory)}")
+    print(f"Unique item types: {len(inventory)}")
 
     print("=== Current Inventory ===")
     if not inventory:
@@ -83,7 +91,7 @@ def print_report(inventory: dict[str, int]) -> None:
             inventory.items(), key=lambda kv: kv[1], reverse=True)
         for name, qty in sorted_items:
             pct = (qty / total) * 100.0 if total > 0 else 0.0
-            print(f"{name}: {qty} units ({pct:.1f}%)")
+            print(f"{name}: {qty} {unit_word(qty)} ({pct:.1f}%)")
 
     print("=== Inventory Statistics ===")
     mm = most_least_abundant(inventory)
@@ -93,27 +101,23 @@ def print_report(inventory: dict[str, int]) -> None:
     else:
         most_name, most_qty, least_name, least_qty = mm
         print(f"Most abundant: {most_name} ({most_qty} units)")
-        print(f"Least abundant: {least_name} ({least_qty} units)")
+        print(
+            f"Least abundant: {least_name} "
+            f"({least_qty} {unit_word(least_qty)})"
+            )
 
     print("=== Item Categories ===")
-    cats = categorize(inventory)
-    print(f"abundant: {cats['abundant']}")
-    print(f"moderate: {cats['moderate']}")
-    print(f"scarce: {cats['scarce']}")
+    moderate, scarce = categorize_subject(inventory)
+    print(f"Moderate: {moderate}")
+    print(f"Scarce: {scarce}")
 
     print("=== Management Suggestions ===")
     print(f"Restock needed: {restock_list(inventory)}")
 
     print("=== Dictionary Properties Demo ===")
-    # keys(), values(), items(), get(), update() demo
     print(f"Dictionary keys: {list(inventory.keys())}")
     print(f"Dictionary values: {list(inventory.values())}")
-    print(f"Dictionary items sample: {list(inventory.items())[:3]}")
-    print(f"Sample lookup - 'sword' in inventory: {inventory.get('sword', 0)}")
-
-    demo_update: dict[str, int] = {}
-    demo_update.update(inventory)
-    print(f"Update demo (copied dict size): {len(demo_update)}")
+    print(f"Sample lookup - 'sword' in inventory: {'sword' in inventory}")
 
 
 def main() -> None:
