@@ -84,9 +84,11 @@ def main() -> None:
     unique_achievements: Set[str] = {
         a for a in ["first_kill", "level_10", "boss_slayer"]
     }
+    uniq = fmt_set(
+        unique_achievements, ['first_kill', 'level_10', 'boss_slayer'])
     print(
         f"Unique achievements: "
-        f"{fmt_set(unique_achievements, ['first_kill', 'level_10', 'boss_slayer'])}"
+        f"{uniq}"
     )
 
     active_regions: Set[str] = {r for r in regions.values()}
