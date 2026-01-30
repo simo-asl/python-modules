@@ -1,18 +1,6 @@
 from typing import Dict, List, Set
 
 
-def make_sets(players: Dict[str, List[str]]) -> Dict[str, Set[str]]:
-    res: Dict[str, Set[str]] = {}
-    for name, achievements in players.items():
-        res[name] = set(achievements)
-    return res
-
-
-def fmt_set_ordered(s: Set[str], order: List[str]) -> str:
-    items = [f"'{x}'" for x in order if x in s]
-    return "{" + ", ".join(items) + "}"
-
-
 def main() -> None:
     players: Dict[str, List[str]] = {
         "alice": [
@@ -29,48 +17,38 @@ def main() -> None:
         ],
     }
 
-    order = [
-        "first_kill", "level_10", "treasure_hunter",
-        "speed_demon", "boss_slayer", "collector", "perfectionist"
-    ]
-
-    ps = make_sets(players)
+    alice_set = set(players.get("alice", {}))
+    bob_set = set(players.get("bob", {}))
+    charlie_set = set(players.get("charlie", {}))
 
     print("=== Achievement Tracker System ===\n")
-    print(f"Player alice achievements: {fmt_set_ordered(ps['alice'], order)}")
-    print(f"Player bob achievements: {fmt_set_ordered(ps['bob'], order)}")
-    print(
-        f"Player charlie achievements: {fmt_set_ordered(ps['charlie'], order)}"
-        )
+    print(f"Player alice achievements: {alice_set}")
+    print(f"Player bob achievements: {bob_set}")
+    print(f"Player charlie achievements: {charlie_set}")
 
     print("\n=== Achievement Analytics ===")
 
-    all_unique: Set[str] = set()
-    for s in ps.values():
-        all_unique |= s
+    all_unique: Set[str] = alice_set.union(bob_set, charlie_set) 
 
-    print(f"All unique achievements: {fmt_set_ordered(all_unique, order)}")
+    print(f"All unique achievements: {all_unique}")
     print(f"Total unique achievements: {len(all_unique)}\n")
 
-    common = ps["alice"] & ps["bob"] & ps["charlie"]
-    print(f"Common to all players: {fmt_set_ordered(common, order)}")
+    common = bob_set & alice_set & charlie_set
+    print(f"Common to all players: {common}")
 
-    counts: Dict[str, int] = {}
-    for s in ps.values():
-        for ach in s:
-            counts[ach] = counts.get(ach, 0) + 1
-
-    rare = {ach for ach, c in counts.items() if c == 1}
-    print(f"Rare achievements (1 player): {fmt_set_ordered(rare, order)}")
+    rare = (alice_set.difference(charlie_set, bob_set)
+            | charlie_set.difference(alice_set, bob_set)
+            | bob_set.difference(alice_set, charlie_set))
+    print(f"Rare achievements (1 player): {rare}")
     print()
-    alice_bob_common = ps["alice"] & ps["bob"]
-    print(f"Alice vs Bob common: {fmt_set_ordered(alice_bob_common, order)}")
+    alice_bob_common = alice_set & bob_set
+    print(f"Alice vs Bob common: {alice_bob_common}")
 
-    alice_unique = ps["alice"] - ps["bob"]
-    bob_unique = ps["bob"] - ps["alice"]
+    alice_unique = alice_set - bob_set
+    bob_unique = bob_set - alice_set
 
-    print(f"Alice unique: {fmt_set_ordered(alice_unique, order)}")
-    print(f"Bob unique: {fmt_set_ordered(bob_unique, order)}")
+    print(f"Alice unique: {alice_unique}")
+    print(f"Bob unique: {bob_unique}")
 
 
 if __name__ == "__main__":

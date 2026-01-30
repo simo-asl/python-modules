@@ -45,7 +45,8 @@ def main() -> None:
     except ValueError as error:
         print(f"Error parsing coordinates: {error}")
         print(
-            f"Error details - Type: {type(error).__name__}, Args: {error.args}"
+            f"Error details - Type: {error.__class__.__name__}"
+            f", Args: {error.args}"
             )
     print()
 

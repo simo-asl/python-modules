@@ -3,18 +3,18 @@ from typing import Generator
 
 def event_type(i: int) -> str:
     if i % 10 == 0:
-        return "treasure"
+        return "found treasure"
     if i % 7 == 0:
-        return "level_up"
-    return "kill"
+        return "leveled up"
+    return "killed monster"
 
 
 def player_name(i: int) -> str:
-    return f"player_{i % 5}"
+    return f"player_{i}"
 
 
 def player_level(i: int) -> int:
-    return (i % 20) + 1
+    return (i % 10) + 8
 
 
 def game_events(n: int) -> Generator[tuple[int, str, int, str], None, None]:
@@ -75,11 +75,9 @@ def main() -> None:
             treasure += 1
         elif kind == "level_up":
             level_up += 1
+        print(f"Event {i}: Player {player} (level {level}) {kind}")
 
-        if i <= 3:
-            print(f"Event {i}: Player {player} (level {level}) {kind}")
-
-    print("...\n")
+    print("")
 
     print("=== Stream Analytics ===")
     print(f"Total events processed: {processed}")
