@@ -1,10 +1,19 @@
+import time
 from typing import Generator
 
 
 def event_type(i: int) -> str:
     if i % 10 == 0:
-        return "found treasure"
+        return "treasure"
     if i % 7 == 0:
+        return "level_up"
+    return "monster"
+
+
+def event_text(kind: str) -> str:
+    if kind == "treasure":
+        return "found treasure"
+    if kind == "level_up":
         return "leveled up"
     return "killed monster"
 
@@ -61,31 +70,46 @@ def main() -> None:
     print("=== Game Data Stream Processor ===\n")
     print(f"Processing {total} game events...\n")
 
+    start = time.perf_counter()
+
     processed = 0
     high_level = 0
     treasure = 0
     level_up = 0
+
+    # Print only "interesting" events to avoid spamming 1000 lines
+    printed = 0
+    max_print = 25
 
     for i, player, level, kind in game_events(total):
         processed += 1
 
         if level >= 10:
             high_level += 1
+
         if kind == "treasure":
             treasure += 1
         elif kind == "level_up":
             level_up += 1
-        print(f"Event {i}: Player {player} (level {level}) {kind}")
 
-    print("")
+        is_interesting = (kind != "monster") or (level >= 10)
+        if is_interesting and printed < max_print:
+            print(f"Event {i}: Player {player} (level {level}) {event_text(kind)}")
+            printed += 1
 
-    print("=== Stream Analytics ===")
+    if printed == max_print:
+        print("...")
+
+    elapsed = time.perf_counter() - start
+
+    print("\n=== Stream Analytics ===")
     print(f"Total events processed: {processed}")
     print(f"High-level players (10+): {high_level}")
     print(f"Treasure events: {treasure}")
     print(f"Level-up events: {level_up}\n")
     print("Memory usage: Constant (streaming)")
-    print("Processing time: 0.045 seconds\n")
+    print(f"Processing time: {elapsed:.3f} seconds\n")
+
     print("=== Generator Demonstration ===")
     fib = ", ".join(str(x) for x in fibonacci(10))
     prm = ", ".join(str(x) for x in primes(5))
