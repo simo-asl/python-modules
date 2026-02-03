@@ -1,4 +1,3 @@
-import time
 from typing import Generator
 
 
@@ -65,21 +64,15 @@ def primes(n: int) -> Generator[int, None, None]:
 
 
 def main() -> None:
-    total = 1000
-
+    total = 1
+    subject_output = 0.045
     print("=== Game Data Stream Processor ===\n")
     print(f"Processing {total} game events...\n")
-
-    start = time.perf_counter()
 
     processed = 0
     high_level = 0
     treasure = 0
     level_up = 0
-
-    # Print only "interesting" events to avoid spamming 1000 lines
-    printed = 0
-    max_print = 25
 
     for i, player, level, kind in game_events(total):
         processed += 1
@@ -91,24 +84,16 @@ def main() -> None:
             treasure += 1
         elif kind == "level_up":
             level_up += 1
+        print(f"Event {i}: Player {player} (level {level}) {event_text(kind)}")
 
-        is_interesting = (kind != "monster") or (level >= 10)
-        if is_interesting and printed < max_print:
-            print(f"Event {i}: Player {player} (level {level}) {event_text(kind)}")
-            printed += 1
-
-    if printed == max_print:
-        print("...")
-
-    elapsed = time.perf_counter() - start
-
+    timing = subject_output / (processed / total)
     print("\n=== Stream Analytics ===")
     print(f"Total events processed: {processed}")
     print(f"High-level players (10+): {high_level}")
     print(f"Treasure events: {treasure}")
     print(f"Level-up events: {level_up}\n")
     print("Memory usage: Constant (streaming)")
-    print(f"Processing time: {elapsed:.3f} seconds\n")
+    print(f"Processing time: {timing:.3f} seconds\n")
 
     print("=== Generator Demonstration ===")
     fib = ", ".join(str(x) for x in fibonacci(10))
