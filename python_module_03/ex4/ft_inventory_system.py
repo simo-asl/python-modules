@@ -32,7 +32,6 @@ def build_inventory(args: list[str]) -> dict[str, int] | None:
             return None
         name, qty = parsed
 
-        # ✅ explicit use of get() and update() (required)
         new_qty = inventory.get(name, 0) + qty
         inventory.update({name: new_qty})
 
