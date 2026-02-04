@@ -3,7 +3,7 @@ def format_set(values: set[str]) -> str:
     return "{" + ", ".join(items) + "}"
 
 
-def main() -> None:
+def machi_main() -> None:
     players: list[str] = [
         "alice",
         "bob",
@@ -165,4 +165,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    machi_main()

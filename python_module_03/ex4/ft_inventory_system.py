@@ -31,7 +31,10 @@ def build_inventory(args: list[str]) -> dict[str, int] | None:
         if parsed is None:
             return None
         name, qty = parsed
-        inventory[name] = inventory.get(name, 0) + qty
+
+        # ✅ explicit use of get() and update() (required)
+        new_qty = inventory.get(name, 0) + qty
+        inventory.update({name: new_qty})
 
     return inventory
 
@@ -54,22 +57,22 @@ def unit_word(qty: int) -> str:
     return "unit" if qty == 1 else "units"
 
 
-def categorize_subject(
-        inventory: dict[str, int]) -> tuple[dict[str, int], dict[str, int]]:
-    if not inventory:
-        return {}, {}
-
-    most_name, most_qty = max(
-        inventory.items(), key=lambda kv: kv[1])
-
-    moderate: dict[str, int] = {most_name: most_qty}
-    scarce: dict[str, int] = {}
+def categorize_subject(inventory: dict[str, int]) -> dict[str, dict[str, int]]:
+    categories: dict[str, dict[str, int]] = {
+        "abundant": {},
+        "moderate": {},
+        "scarce": {},
+    }
 
     for name, qty in inventory.items():
-        if name != most_name:
-            scarce[name] = qty
+        if qty <= 1:
+            categories["scarce"].update({name: qty})
+        elif qty <= 4:
+            categories["moderate"].update({name: qty})
+        else:
+            categories["abundant"].update({name: qty})
 
-    return moderate, scarce
+    return categories
 
 
 def restock_list(inventory: dict[str, int]) -> list[str]:
@@ -88,7 +91,8 @@ def print_report(inventory: dict[str, int]) -> None:
         print("(empty)")
     else:
         sorted_items = sorted(
-            inventory.items(), key=lambda kv: kv[1], reverse=True)
+            inventory.items(), key=lambda kv: kv[1], reverse=True
+        )
         for name, qty in sorted_items:
             pct = (qty / total) * 100.0 if total > 0 else 0.0
             print(f"{name}: {qty} {unit_word(qty)} ({pct:.1f}%)")
@@ -104,12 +108,13 @@ def print_report(inventory: dict[str, int]) -> None:
         print(
             f"Least abundant: {least_name} "
             f"({least_qty} {unit_word(least_qty)})\n"
-            )
+        )
 
-    print("=== Item Categories ===")
-    moderate, scarce = categorize_subject(inventory)
-    print(f"Moderate: {moderate}")
-    print(f"Scarce: {scarce}\n")
+    print("=== Item Categories (Nested Dicts) ===")
+    categories = categorize_subject(inventory)
+    print(f"Abundant: {categories['abundant']}")
+    print(f"Moderate: {categories['moderate']}")
+    print(f"Scarce: {categories['scarce']}\n")
 
     print("=== Management Suggestions ===")
     print(f"Restock needed: {restock_list(inventory)}\n")
@@ -117,16 +122,16 @@ def print_report(inventory: dict[str, int]) -> None:
     print("=== Dictionary Properties Demo ===")
     print(f"Dictionary keys: {list(inventory.keys())}")
     print(f"Dictionary values: {list(inventory.values())}")
+    print(f"Dictionary items: {list(inventory.items())}")
     print(f"Sample lookup - 'sword' in inventory: {'sword' in inventory}")
 
 
-def main() -> None:
+def machi_main() -> None:
     args = sys.argv[1:]
     if not args:
         print("Usage: python3 ft_inventory_system.py item:qty item:qty ...")
-        print(
-            "Example: python3 ft_inventory_system.py sword:1 potion:5 shield:2"
-            )
+        print("Example: ", end="")
+        print("python3 ft_inventory_system.py sword:1 potion:5 shield:2")
         return
 
     inventory = build_inventory(args)
@@ -141,4 +146,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    machi_main()

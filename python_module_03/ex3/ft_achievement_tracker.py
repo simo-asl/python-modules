@@ -1,7 +1,7 @@
 from typing import Dict, List, Set
 
 
-def main() -> None:
+def machi_main() -> None:
     players: Dict[str, List[str]] = {
         "alice": [
             "first_kill", "level_10", "treasure_hunter",
@@ -28,7 +28,7 @@ def main() -> None:
 
     print("\n=== Achievement Analytics ===")
 
-    all_unique: Set[str] = alice_set.union(bob_set, charlie_set) 
+    all_unique: Set[str] = alice_set.union(bob_set, charlie_set)
 
     print(f"All unique achievements: {all_unique}")
     print(f"Total unique achievements: {len(all_unique)}\n")
@@ -52,4 +52,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    machi_main()

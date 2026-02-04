@@ -63,7 +63,7 @@ def primes(n: int) -> Generator[int, None, None]:
         x += 1
 
 
-def main() -> None:
+def machi_main() -> None:
     total = 1
     subject_output = 0.045
     print("=== Game Data Stream Processor ===\n")
@@ -103,4 +103,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    machi_main()

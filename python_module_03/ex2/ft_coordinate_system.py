@@ -20,7 +20,7 @@ def parse_coordinates(s: str) -> tuple[int, int, int]:
     return (int(parts[0]), int(parts[1]), int(parts[2]))
 
 
-def main() -> None:
+def machi_main() -> None:
     print("=== Game Coordinate System ===\n")
 
     origin = create_position(0, 0, 0)
@@ -57,4 +57,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    machi_main()
