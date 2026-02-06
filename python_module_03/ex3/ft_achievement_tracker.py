@@ -17,9 +17,24 @@ def machi_main() -> None:
         ],
     }
 
-    alice_set = set(players.get("alice", {}))
-    bob_set = set(players.get("bob", {}))
-    charlie_set = set(players.get("charlie", {}))
+    try:
+        alice_list = players["alice"]
+    except KeyError:
+        alice_list = []
+
+    try:
+        bob_list = players["bobp"]
+    except KeyError:
+        bob_list = []
+
+    try:
+        charlie_list = players["charlie"]
+    except KeyError:
+        charlie_list = []
+
+    alice_set = set(alice_list)
+    bob_set = set(bob_list)
+    charlie_set = set(charlie_list)
 
     print("=== Achievement Tracker System ===\n")
     print(f"Player alice achievements: {alice_set}")
@@ -36,11 +51,14 @@ def machi_main() -> None:
     common = bob_set & alice_set & charlie_set
     print(f"Common to all players: {common}")
 
-    rare = (alice_set.difference(charlie_set, bob_set)
-            | charlie_set.difference(alice_set, bob_set)
-            | bob_set.difference(alice_set, charlie_set))
+    rare = (
+        alice_set.difference(charlie_set, bob_set)
+        | charlie_set.difference(alice_set, bob_set)
+        | bob_set.difference(alice_set, charlie_set)
+    )
     print(f"Rare achievements (1 player): {rare}")
     print()
+
     alice_bob_common = alice_set & bob_set
     print(f"Alice vs Bob common: {alice_bob_common}")
 

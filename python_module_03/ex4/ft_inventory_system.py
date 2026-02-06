@@ -39,7 +39,10 @@ def build_inventory(args: list[str]) -> dict[str, int] | None:
 
 
 def total_quantity(inventory: dict[str, int]) -> int:
-    return sum(inventory.values())
+    total = 0
+    for qty in inventory.values():
+        total += qty
+    return total
 
 
 def most_least_abundant(
@@ -47,8 +50,21 @@ def most_least_abundant(
     if not inventory:
         return None
 
-    most_name, most_qty = max(inventory.items(), key=lambda kv: kv[1])
-    least_name, least_qty = min(inventory.items(), key=lambda kv: kv[1])
+    most_name = ""
+    most_qty = -1
+
+    least_name = ""
+    least_qty = None
+
+    for name, qty in inventory.items():
+        if qty > most_qty:
+            most_qty = qty
+            most_name = name
+
+        if least_qty is None or qty < least_qty:
+            least_qty = qty
+            least_name = name
+
     return most_name, most_qty, least_name, least_qty
 
 
@@ -75,7 +91,33 @@ def categorize_subject(inventory: dict[str, int]) -> dict[str, dict[str, int]]:
 
 
 def restock_list(inventory: dict[str, int]) -> list[str]:
-    return [name for name, qty in inventory.items() if qty <= 1]
+    out: list[str] = []
+    for name, qty in inventory.items():
+        if qty <= 1:
+            out.append(name)
+    return out
+
+
+def print_inventory_desc(inventory: dict[str, int], total: int) -> None:
+    printed: dict[str, int] = {}
+    printed_count = 0
+
+    while printed_count < len(inventory):
+        best_name = ""
+        best_qty = -1
+
+        for name, qty in inventory.items():
+            if name in printed:
+                continue
+            if qty > best_qty:
+                best_qty = qty
+                best_name = name
+
+        printed.update({best_name: 1})
+        printed_count += 1
+
+        pct = (best_qty / total) * 100.0 if total > 0 else 0.0
+        print(f"{best_name}: {best_qty} {unit_word(best_qty)} ({pct:.1f}%)")
 
 
 def print_report(inventory: dict[str, int]) -> None:
@@ -89,12 +131,7 @@ def print_report(inventory: dict[str, int]) -> None:
     if not inventory:
         print("(empty)")
     else:
-        sorted_items = sorted(
-            inventory.items(), key=lambda kv: kv[1], reverse=True
-        )
-        for name, qty in sorted_items:
-            pct = (qty / total) * 100.0 if total > 0 else 0.0
-            print(f"{name}: {qty} {unit_word(qty)} ({pct:.1f}%)")
+        print_inventory_desc(inventory, total)
 
     print("\n=== Inventory Statistics ===")
     mm = most_least_abundant(inventory)
@@ -104,24 +141,27 @@ def print_report(inventory: dict[str, int]) -> None:
     else:
         most_name, most_qty, least_name, least_qty = mm
         print(f"Most abundant: {most_name} ({most_qty} units)")
-        print(
-            f"Least abundant: {least_name} "
-            f"({least_qty} {unit_word(least_qty)})\n"
-        )
+        print(f"Least abundant: {least_name} "
+              f"({least_qty} {unit_word(least_qty)})\n")
 
     print("=== Item Categories (Nested Dicts) ===")
     categories = categorize_subject(inventory)
-    print(f"Abundant: {categories['abundant']}")
-    print(f"Moderate: {categories['moderate']}")
-    print(f"Scarce: {categories['scarce']}\n")
+
+    abundant = categories.get("abundant", {})
+    moderate = categories.get("moderate", {})
+    scarce = categories.get("scarce", {})
+
+    print(f"Abundant: {abundant}")
+    print(f"Moderate: {moderate}")
+    print(f"Scarce: {scarce}\n")
 
     print("=== Management Suggestions ===")
     print(f"Restock needed: {restock_list(inventory)}\n")
 
     print("=== Dictionary Properties Demo ===")
-    print(f"Dictionary keys: {list(inventory.keys())}")
-    print(f"Dictionary values: {list(inventory.values())}")
-    print(f"Dictionary items: {list(inventory.items())}")
+    print(f"Dictionary keys: {inventory.keys()}")
+    print(f"Dictionary values: {inventory.values()}")
+    print(f"Dictionary items: {inventory.items()}")
     print(f"Sample lookup - 'sword' in inventory: {'sword' in inventory}")
 
 
@@ -135,10 +175,8 @@ def machi_main() -> None:
 
     inventory = build_inventory(args)
     if inventory is None:
-        print(
-            "Error: invalid token format. Expected item:qty "
-            "with qty as a non-negative integer."
-        )
+        print("Error: invalid token format. Expected item:qty "
+              "with qty as a non-negative integer.")
         return
 
     print_report(inventory)
