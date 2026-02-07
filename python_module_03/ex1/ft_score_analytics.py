@@ -1,7 +1,7 @@
 import sys
 
 
-def func() -> None:
+def ft_score_analytics() -> None:
     args = sys.argv[1:]
     print("=== Player Score Analytics ===")
 
@@ -41,4 +41,4 @@ def func() -> None:
 if __name__ == "__main__":
     """Python has no built-in main() like C/C++/Rust;
       this block runs only when the file is executed directly."""
-    func()
+    ft_score_analytics()
