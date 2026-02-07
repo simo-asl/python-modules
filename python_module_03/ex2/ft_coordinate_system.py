@@ -14,13 +14,15 @@ def calculate_distance(p1: tuple[float, float, float],
 
 
 def parse_coordinates(s: str) -> tuple[int, int, int]:
+    if s is None:
+        raise ValueError("Expected 3 comma-separated values")
     parts = s.split(",")
     if len(parts) != 3:
         raise ValueError("Expected 3 comma-separated values")
     return (int(parts[0]), int(parts[1]), int(parts[2]))
 
 
-def machi_main() -> None:
+def put_your_args(first_str: str, second_str: str) -> None:
     print("=== Game Coordinate System ===\n")
 
     origin = create_position(0, 0, 0)
@@ -30,18 +32,27 @@ def machi_main() -> None:
     print(f"Distance between {origin} and {pos}: {d1:.2f}")
     print()
 
-    coord_str = "3,4,0"
-    print(f'Parsing coordinates: "{coord_str}"')
-    parsed = parse_coordinates(coord_str)
-    print(f"Parsed position: {parsed}")
-    d2 = calculate_distance(origin, parsed)
-    print(f"Distance between {origin} and {parsed}: {d2}")
-    print()
-
-    bad = "abc,def,ghi"
-    print(f'Parsing invalid coordinates: "{bad}"')
+    print(f'Parsing coordinates: "{first_str}"')
     try:
-        _ = parse_coordinates(bad)
+        parsed = parse_coordinates(first_str)
+        print(f"Parsed position: {parsed}")
+        d2 = calculate_distance(origin, parsed)
+        print(f"Distance between {origin} and {parsed}: {d2}")
+        print()
+    except ValueError as error:
+        print(f"Error parsing coordinates: {error}")
+        print(
+            f"Error details - Type: {error.__class__.__name__}"
+            f", Args: {error.args}"
+            )
+        return
+    print(f'Parsing invalid coordinates: "{second_str}"')
+    try:
+        parsed = parse_coordinates(second_str)
+        print(f"Parsed position: {parsed}")
+        d2 = calculate_distance(origin, parsed)
+        print(f"Distance between {origin} and {parsed}: {d2}")
+        print()
     except ValueError as error:
         print(f"Error parsing coordinates: {error}")
         print(
@@ -57,4 +68,4 @@ def machi_main() -> None:
 
 
 if __name__ == "__main__":
-    machi_main()
+    put_your_args("3,4,0", "abc,def,ghi")
