@@ -1,7 +1,7 @@
 from typing import Dict, List, Set
 
 
-def machi_main() -> None:
+def ft_achievement_tracker() -> None:
     players: Dict[str, List[str]] = {
         "alice": [
             "first_kill", "level_10", "treasure_hunter",
@@ -70,4 +70,6 @@ def machi_main() -> None:
 
 
 if __name__ == "__main__":
-    machi_main()
+    """Python has no built-in main() like C/C++/Rust;
+      this block runs only when the file is executed directly."""
+    ft_achievement_tracker()

@@ -165,7 +165,7 @@ def print_report(inventory: dict[str, int]) -> None:
     print(f"Sample lookup - 'sword' in inventory: {'sword' in inventory}")
 
 
-def machi_main() -> None:
+def ft_inventory_system() -> None:
     args = sys.argv[1:]
     if not args:
         print("Usage: python3 ft_inventory_system.py item:qty item:qty ...")
@@ -183,4 +183,6 @@ def machi_main() -> None:
 
 
 if __name__ == "__main__":
-    machi_main()
+    """Python has no built-in main() like C/C++/Rust;
+      this block runs only when the file is executed directly."""
+    ft_inventory_system()

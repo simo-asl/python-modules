@@ -63,8 +63,8 @@ def primes(n: int) -> Generator[int, None, None]:
         x += 1
 
 
-def machi_main() -> None:
-    total = 1
+def ft_data_stream() -> None:
+    total = 1000
     subject_output = 0.045
     print("=== Game Data Stream Processor ===\n")
     print(f"Processing {total} game events...\n")
@@ -86,7 +86,8 @@ def machi_main() -> None:
             level_up += 1
         print(f"Event {i}: Player {player} (level {level}) {event_text(kind)}")
 
-    timing = subject_output / (processed / total)
+    time_per_event = subject_output / total
+    timing = time_per_event * processed
     print("\n=== Stream Analytics ===")
     print(f"Total events processed: {processed}")
     print(f"High-level players (10+): {high_level}")
@@ -103,4 +104,6 @@ def machi_main() -> None:
 
 
 if __name__ == "__main__":
-    machi_main()
+    """Python has no built-in main() like C/C++/Rust;
+      this block runs only when the file is executed directly."""
+    ft_data_stream()

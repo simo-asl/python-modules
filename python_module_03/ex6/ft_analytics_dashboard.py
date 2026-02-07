@@ -1,9 +1,14 @@
 def format_set(values: set[str]) -> str:
-    items = [f"'{x}'" for x in sorted(values)]
-    return "{" + ", ".join(items) + "}"
+    sorted_values = sorted(values)
+
+    quoted = []
+    for v in sorted_values:
+        quoted.append("'" + v + "'")
+
+    return "{" + ", ".join(quoted) + "}"
 
 
-def machi_main() -> None:
+def ft_analytics_dashboard() -> None:
     players: list[str] = [
         "alice",
         "bob",
@@ -165,4 +170,6 @@ def machi_main() -> None:
 
 
 if __name__ == "__main__":
-    machi_main()
+    """Python has no built-in main() like C/C++/Rust;
+      this block runs only when the file is executed directly."""
+    ft_analytics_dashboard()

@@ -1,7 +1,7 @@
 import sys
 
 
-def machi_main() -> None:
+def func() -> None:
     args = sys.argv[1:]
     print("=== Player Score Analytics ===")
 
@@ -39,4 +39,6 @@ def machi_main() -> None:
 
 
 if __name__ == "__main__":
-    machi_main()
+    """Python has no built-in main() like C/C++/Rust;
+      this block runs only when the file is executed directly."""
+    func()
