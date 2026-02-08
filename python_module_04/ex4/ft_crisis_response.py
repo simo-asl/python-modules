@@ -1,3 +1,4 @@
+
 def crisis_handler(filename: str, routine: bool) -> None:
     if routine:
         print(f"ROUTINE ACCESS: Attempting access to '{filename}'...")
@@ -36,7 +37,7 @@ def crisis_handler(filename: str, routine: bool) -> None:
             print("STATUS: Crisis handled, system stable")
 
 
-def main() -> None:
+def ft_crisis_response() -> None:
     print("=== CYBER ARCHIVES - CRISIS RESPONSE SYSTEM ===")
 
     crisis_handler("lost_archive.txt", routine=False)
@@ -47,4 +48,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        ft_crisis_response()
+    except Exception as error:
+        print(f"ERROR: {error}")

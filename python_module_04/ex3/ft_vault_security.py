@@ -22,7 +22,7 @@ def write_secure_note(filename: str, line: str) -> None:
         f.write(line + "\n")
 
 
-def main() -> None:
+def ft_vault_security() -> None:
     classified_file = "classified_vault.txt"
     out_file = "secure_protocols.txt"
 
@@ -48,4 +48,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        ft_vault_security()
+    except Exception as error:
+        print(f"ERROR: {error}")

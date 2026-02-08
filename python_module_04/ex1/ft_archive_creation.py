@@ -5,7 +5,7 @@ def write_archive(filename: str, entries: list[str]) -> None:
     f.close()
 
 
-def main() -> None:
+def ft_archive_creation() -> None:
     filename = "new_discovery.txt"
     entries = [
         "[ENTRY 001] New quantum algorithm discovered",
@@ -28,4 +28,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        ft_archive_creation()
+    except Exception as error:
+        print(f"ERROR: {error}")

@@ -9,7 +9,7 @@ def read_file_content(filename: str) -> str | None:
     return content
 
 
-def main() -> None:
+def ft_ancient_text() -> None:
     filename = "ancient_fragment.txt"
 
     print("=== CYBER ARCHIVES - DATA RECOVERY SYSTEM ===")
@@ -32,4 +32,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        ft_ancient_text()
+    except Exception as error:
+        print(f"ERROR: {error}")

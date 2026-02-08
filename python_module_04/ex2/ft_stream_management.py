@@ -1,7 +1,7 @@
 import sys
 
 
-def main() -> None:
+def ft_stream_management() -> None:
     print("=== CYBER ARCHIVES - COMMUNICATION SYSTEM ===")
 
     archivist_id = input("Input Stream active. Enter archivist ID: ")
@@ -20,4 +20,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        ft_stream_management()
+    except Exception as error:
+        print(f"ERROR: {error}")
