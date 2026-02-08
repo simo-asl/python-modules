@@ -48,10 +48,10 @@ def put_your_args(first_str: str, second_str: str) -> None:
         return
     print(f'Parsing invalid coordinates: "{second_str}"')
     try:
-        parsed = parse_coordinates(second_str)
-        print(f"Parsed position: {parsed}")
-        d2 = calculate_distance(origin, parsed)
-        print(f"Distance between {origin} and {parsed}: {d2}")
+        parsed2 = parse_coordinates(second_str)
+        print(f"Parsed position: {parsed2}")
+        d2 = calculate_distance(origin, parsed2)
+        print(f"Distance between {origin} and {parsed2}: {d2}")
         print()
     except ValueError as error:
         print(f"Error parsing coordinates: {error}")

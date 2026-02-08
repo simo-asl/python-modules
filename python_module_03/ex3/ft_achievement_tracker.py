@@ -23,7 +23,7 @@ def ft_achievement_tracker() -> None:
         alice_list = []
 
     try:
-        bob_list = players["bobp"]
+        bob_list = players["bob"]
     except KeyError:
         bob_list = []
 
