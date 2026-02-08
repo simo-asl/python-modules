@@ -14,8 +14,6 @@ def calculate_distance(p1: tuple[float, float, float],
 
 
 def parse_coordinates(s: str) -> tuple[int, int, int]:
-    if s is None:
-        raise ValueError("Expected 3 comma-separated values")
     parts = s.split(",")
     if len(parts) != 3:
         raise ValueError("Expected 3 comma-separated values")
@@ -71,6 +69,6 @@ if __name__ == "__main__":
     """Python has no built-in main() like C/C++/Rust;
       this block runs only when the file is executed directly."""
     try:
-        put_your_args("3,4,0", "abc,def,ghi")
+        put_your_args(None, "abc,def,ghi")
     except Exception as error:
         print(f"ERROR: {error}")
