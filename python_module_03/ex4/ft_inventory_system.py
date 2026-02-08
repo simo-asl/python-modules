@@ -151,17 +151,16 @@ def print_report(inventory: dict[str, int]) -> None:
     moderate = categories.get("moderate", {})
     scarce = categories.get("scarce", {})
 
-    print(f"Abundant: {abundant}")
-    print(f"Moderate: {moderate}")
+    scarce.update(moderate)
+    print(f"Moderate: {abundant}")
     print(f"Scarce: {scarce}\n")
 
     print("=== Management Suggestions ===")
     print(f"Restock needed: {restock_list(inventory)}\n")
 
     print("=== Dictionary Properties Demo ===")
-    print(f"Dictionary keys: {inventory.keys()}")
-    print(f"Dictionary values: {inventory.values()}")
-    print(f"Dictionary items: {inventory.items()}")
+    print(f"Dictionary keys: {list(inventory.keys())}")
+    print(f"Dictionary values: {list(inventory.values())}")
     print(f"Sample lookup - 'sword' in inventory: {'sword' in inventory}")
 
 
@@ -185,4 +184,7 @@ def ft_inventory_system() -> None:
 if __name__ == "__main__":
     """Python has no built-in main() like C/C++/Rust;
       this block runs only when the file is executed directly."""
-    ft_inventory_system()
+    try:
+        ft_inventory_system()
+    except Exception as error:
+        print(f"ERROR: {error}")

@@ -41,4 +41,7 @@ def ft_score_analytics() -> None:
 if __name__ == "__main__":
     """Python has no built-in main() like C/C++/Rust;
       this block runs only when the file is executed directly."""
-    ft_score_analytics()
+    try:
+        ft_score_analytics()
+    except Exception as error:
+        print(f"ERROR: {error}")

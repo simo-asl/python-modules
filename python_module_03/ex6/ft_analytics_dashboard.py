@@ -172,4 +172,7 @@ def ft_analytics_dashboard() -> None:
 if __name__ == "__main__":
     """Python has no built-in main() like C/C++/Rust;
       this block runs only when the file is executed directly."""
-    ft_analytics_dashboard()
+    try:
+        ft_analytics_dashboard()
+    except Exception as error:
+        print(f"ERROR: {error}")

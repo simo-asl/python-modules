@@ -72,4 +72,7 @@ def ft_achievement_tracker() -> None:
 if __name__ == "__main__":
     """Python has no built-in main() like C/C++/Rust;
       this block runs only when the file is executed directly."""
-    ft_achievement_tracker()
+    try:
+        ft_achievement_tracker()
+    except Exception as error:
+        print(f"ERROR: {error}")

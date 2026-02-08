@@ -70,4 +70,7 @@ def put_your_args(first_str: str, second_str: str) -> None:
 if __name__ == "__main__":
     """Python has no built-in main() like C/C++/Rust;
       this block runs only when the file is executed directly."""
-    put_your_args("3,4,0", "abc,def,ghi")
+    try:
+        put_your_args("3,4,0", "abc,def,ghi")
+    except Exception as error:
+        print(f"ERROR: {error}")

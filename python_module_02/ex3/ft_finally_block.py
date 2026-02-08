@@ -2,7 +2,7 @@ def water_plants(plant_list: list, plant: list) -> None:
     print("Opening watering system")
     try:
         for data in plant:
-            if data not in plant_list: 
+            if data not in plant_list:
                 print("Error: Cannot water None - invalid plant!")
                 return
             print(f"Watering {data}")
