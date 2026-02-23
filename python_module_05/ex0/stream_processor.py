@@ -24,7 +24,8 @@ class NumericProcessor(BaseProcessor):
         if not isinstance(data, bool) and isinstance(data, (int, float)):
             return True
         elif isinstance(data, list) and len(data) > 0:
-            return all(not isinstance(item, bool) and isinstance(item, (float, int))
+            return all(not isinstance(item, bool)
+                       and isinstance(item, (float, int))
                        for item in data)
         else:
             return False
@@ -39,8 +40,8 @@ class NumericProcessor(BaseProcessor):
                 numeric_values = data
             total_sum = sum(numeric_values)
             total_count = len(numeric_values)
-            output = f"Processed {total_count} numeric values, sum={total_sum}, " + \
-                f"avg={total_sum / total_count}\n"
+            output = (f"Processed {total_count} numeric values, sum="
+                      f"{total_sum}, avg={total_sum / total_count}\n")
             return output
 
     def format_output(self, result: str) -> str:
@@ -60,7 +61,8 @@ class TextProcessor(BaseProcessor):
         else:
             word_tokens = data.split()
             word_count = len(word_tokens)
-            char_count = sum(len(word) for word in word_tokens) + word_count - 1
+            char_count = sum(
+                len(word) for word in word_tokens) + word_count - 1
             output = f"Processed text: {char_count} characters, " + \
                 f"{word_count} words\n"
             return output
@@ -85,7 +87,8 @@ class LogProcessor(BaseProcessor):
             raise ValueError("The Data Not Valid\n")
         else:
             error_type, message = data.split(':', 1)
-            tag = self._log_level_mappings.get(error_type.lower(), error_type.upper())
+            tag = self._log_level_mappings.get(
+                error_type.lower(), error_type.upper())
             output = f"[{tag}] {error_type.upper()} level detected:{message}\n"
             return output
 
