@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Any, List, Dict, Optional
 
 
-class BaseProcessor(ABC):
+class DataPro(ABC):
 
     @abstractmethod
     def process(self, data: Any) -> str:
@@ -16,7 +16,7 @@ class BaseProcessor(ABC):
         return f"Output: {result}"
 
 
-class NumericProcessor(BaseProcessor):
+class NumericProcessor(DataPro):
     def __init__(self) -> None:
         super().__init__()
 
@@ -48,7 +48,7 @@ class NumericProcessor(BaseProcessor):
         return f"Output: {result}"
 
 
-class TextProcessor(BaseProcessor):
+class TextProcessor(DataPro):
     def __init__(self) -> None:
         super().__init__()
 
@@ -58,20 +58,17 @@ class TextProcessor(BaseProcessor):
     def process(self, data: Any) -> str:
         if not self.validate(data):
             raise ValueError("The Data Not Valid\n")
-        else:
-            word_tokens = data.split()
-            word_count = len(word_tokens)
-            char_count = sum(
-                len(word) for word in word_tokens) + word_count - 1
-            output = f"Processed text: {char_count} characters, " + \
-                f"{word_count} words\n"
-            return output
+        word_tokens = data.split()
+        word_count = len(word_tokens)
+        char_count = len(data)
+
+        return f"Processed text: {char_count} characters, {word_count} words\n"
 
     def format_output(self, result: str) -> str:
         return f"Output: {result}"
 
 
-class LogProcessor(BaseProcessor):
+class LogProcessor(DataPro):
     def __init__(self) -> None:
         super().__init__()
         self._log_level_mappings = {'info': 'INFO', 'error': 'ALERT'}
@@ -103,35 +100,39 @@ def run_processing_suite() -> None:
         (TextProcessor(), "Hello Nexus World", "Text"),
         (LogProcessor(), "Error: Connection timeout", "Log entry")
     ]
+    names = ["Numeric", "Text", "Log"]
+    index = 0
 
     for processor, test_data, data_type in processor_instances:
         try:
+            print(f"Initializing {names[index]} Processor...")
             print(f'Processing data: "{test_data}"')
             result = processor.process(test_data)
             print(f"Validation: {data_type} data verified")
             print(processor.format_output(result))
+            index += 1
         except Exception as e:
             print(f"{e.__class__.__name__}: {e}")
 
-    try:
-        print("=== Polymorphic Processing Demo ===")
-        print("Processing multiple data types through same interface...")
-        processor_list: Optional[List] = [
-            NumericProcessor(),
-            TextProcessor(),
-            LogProcessor()
-        ]
-        test_dataset: Dict = {
-            0: [1, 2, 3],
-            1: "word wordddd ",
-            2: "INFO: System ready"
-        }
-        for index, processor in enumerate(processor_list):
+    print("=== Polymorphic Processing Demo ===")
+    print("Processing multiple data types through same interface...")
+    processor_list: List[DataPro] = [
+        NumericProcessor(),
+        TextProcessor(),
+        LogProcessor()
+    ]
+    test_dataset: Dict = {
+        0: [1, 2, 3],
+        1: "word wordddd ",
+        2: "INFO: System ready"
+    }
+    for index, processor in enumerate(processor_list):
+        try:
             result = processor.process(test_dataset[index])
             print(f"Result: {index + 1} {result}", end="")
-        print("\nFoundation systems online. Nexus ready for advanced streams.")
-    except Exception as e:
-        print(f"{e.__class__.__name__}: {e}")
+        except Exception as e:
+            print(f"{e.__class__.__name__}: {e}")
+    print("\nFoundation systems online. Nexus ready for advanced streams.")
 
 
 if __name__ == '__main__':
