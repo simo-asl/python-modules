@@ -346,7 +346,7 @@ if __name__ == '__main__':
 
         print("=== Error Recovery Test ===")
         print("Simulating pipeline failure...")
-        malformed_csv = "fname, lname, age\n oualid"
+        malformed_csv = "fname, lname, age"
         system_manager.process_data({'format': 'csv', 'data': malformed_csv})
         print("\nNexus Integration complete. All systems operational.")
     except Exception as e:
