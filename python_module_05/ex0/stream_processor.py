@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Any, List, Dict
+from typing import Any, List, Dict, Union, Optional
 
 
-class DataPro(ABC):
+class DataProcessor(ABC):
 
     @abstractmethod
     def process(self, data: Any) -> str:
@@ -16,7 +16,7 @@ class DataPro(ABC):
         return f"Output: {result}"
 
 
-class NumericProcessor(DataPro):
+class NumericProcessor(DataProcessor):
     def __init__(self) -> None:
         super().__init__()
 
@@ -30,7 +30,7 @@ class NumericProcessor(DataPro):
         else:
             return False
 
-    def process(self, data: Any) -> str:
+    def process(self, data: Union[list, int]) -> Optional[str]:
         if not self.validate(data):
             raise ValueError("The Data Not Valid\n")
         else:
@@ -48,7 +48,7 @@ class NumericProcessor(DataPro):
         return f"Output: {result}"
 
 
-class TextProcessor(DataPro):
+class TextProcessor(DataProcessor):
     def __init__(self) -> None:
         super().__init__()
 
@@ -68,7 +68,7 @@ class TextProcessor(DataPro):
         return f"Output: {result}"
 
 
-class LogProcessor(DataPro):
+class LogProcessor(DataProcessor):
     def __init__(self) -> None:
         super().__init__()
         self._log_level_mappings = {'info': 'INFO', 'error': 'ALERT'}
@@ -100,23 +100,21 @@ def run_processing_suite() -> None:
         (TextProcessor(), "Hello Nexus World", "Text"),
         (LogProcessor(), "Error: Connection timeout", "Log entry")
     ]
-    names = ["Numeric", "Text", "Log"]
-    index = 0
 
     for processor, test_data, data_type in processor_instances:
         try:
-            print(f"Initializing {names[index]} Processor...")
+            name = processor.__class__.__name__.split("P")
+            print(f"Initializing {name[0]} {'P' + name[1]}...")
             print(f'Processing data: "{test_data}"')
             result = processor.process(test_data)
             print(f"Validation: {data_type} data verified")
             print(processor.format_output(result))
-            index += 1
         except Exception as e:
             print(f"{e.__class__.__name__}: {e}")
 
     print("=== Polymorphic Processing Demo ===")
     print("Processing multiple data types through same interface...")
-    processor_list: List[DataPro] = [
+    processor_list: List[DataProcessor] = [
         NumericProcessor(),
         TextProcessor(),
         LogProcessor()

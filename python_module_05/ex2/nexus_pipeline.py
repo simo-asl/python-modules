@@ -292,7 +292,7 @@ if __name__ == '__main__':
 
         # Initialize test data
         json_test_data = {"sensor": "temp", "value": 23.5, "unit": 'C'}
-        csv_test_data = "user,action,timestamp\noualid,logged,2026-02-10"
+        csv_test_data = "user,action,timestamp\nmohamed,logged,2026-02-10"
         stream_test_data = [40, 50, 10]
 
         # Process JSON format
