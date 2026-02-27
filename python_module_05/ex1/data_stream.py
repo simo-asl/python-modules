@@ -223,10 +223,10 @@ class StreamProcessor():
 
 def run_stream_analysis() -> None:
     stream_test_configs = [
-        (SensorStream('SENSOR_001'), [{"temp": 22.5}, {"humidity": 65},
-                                      {'pressure': 1013}], 'sensor'),
-        (TransactionStream('TRANS_001'), [{'buy': 100}, {'buy': 0},
-                                          {'buy': 200}], 'transaction'),
+        (SensorStream('SENSOR_001'), [{"temp": 24.5}, {"humidity": 55},
+                                      {'pressure': 1012}], 'sensor'),
+        (TransactionStream('TRANS_001'), [{'buy': 300}, {'sell': 120},
+                                          {'buy': 70}], 'transaction'),
         (EventStream('EVENT_001'), ['logged', 'error', 'info'], 'event')
     ]
     stream_instances = []
@@ -238,8 +238,10 @@ def run_stream_analysis() -> None:
             stream_stats = stream_obj.get_stats()
 
             if stream_label == 'sensor':
-                print(f"{analysis_result}, "
-                      f"avg temp: {stream_stats.get('avg_temp')}°C\n")
+                print(
+                      f"{analysis_result}, "
+                      f"avg temp: {stream_stats.get('avg_temp')}°C\n"
+                      )
             elif stream_label == 'transaction':
                 net_val = stream_stats.get('net_flow')
                 sign = '+' if net_val > 0 else ''
@@ -257,8 +259,8 @@ def run_stream_analysis() -> None:
         print("=== Polymorphic Stream Processing ===")
         print("Processing mixed stream types through unified interface...\n")
         combined_batch_data = [
-            [{'temp': 5000}, {"humidity": 5000}, {'pressure': 99}],
-            [{'buy': 10}, {'sell': 500}, {'buy': 600}],
+            [{'temp': 120}, {"humidity": 45}, {'pressure': 98}],
+            [{'buy': 80}, {'sell': 150}, {'buy': 40}],
             ['login', 'error', 'logout']
         ]
         integrated_processor = StreamProcessor()
