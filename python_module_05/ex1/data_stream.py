@@ -274,9 +274,9 @@ def run_stream_analysis() -> None:
             combined_batch_data)
         print(f"Filtered results: "
               f"{filter_result.get('sensor_count')} ", end="")
-        print(f"critical sensor alerts, {
-            filter_result.get('transaction_count')} "
-              "large transaction\n")
+        print(f"critical sensor alerts,"
+              f"{filter_result.get('transaction_count')} large transaction\n"
+              )
         print("All streams processed successfully. Nexus throughput optimal.")
     except Exception as e:
         print(f"Type: {e.__class__.__name__}, {e}")
