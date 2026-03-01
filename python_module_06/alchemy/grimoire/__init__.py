@@ -1,4 +1,5 @@
-from .spellbook import record_spell
+from .spellbook import record_spell, record_spell_injected
 from .validator import validate_ingredients
 record_spell
+record_spell_injected
 validate_ingredients
