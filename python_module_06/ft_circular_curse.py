@@ -29,16 +29,3 @@ except Exception as e:
 
 print('\nCircular dependency curse avoided using late imports!')
 print('All spells processed safely!')
-
-print('\nTesting dependency injection technique:')
-try:
-    print('record_spell_injected("Injected Spell", ', end="")
-    print('"fire", validate_ingredients)'
-          f': {grimoire.record_spell_injected("Injected Spell", "fire",
-                                              grimoire.validate_ingredients)}')
-    print('record_spell_injected("Bad Injected Spell", ', end="")
-    print('"stone", validate_ingredients)'
-          f': {grimoire.record_spell_injected("Bad Injected Spell", "stone",
-                                              grimoire.validate_ingredients)}')
-except Exception as e:
-    print(f'ERROR: {e}')
