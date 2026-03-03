@@ -1,0 +1,90 @@
+from ex0.Card import Card
+from ex2.Combatable import Combatable
+from ex4.Rankable import Rankable
+
+
+class TournamentCard(Card, Combatable, Rankable):
+    def __init__(
+        self,
+        name: str,
+        cost: int,
+        rarity: str,
+        attack: int,
+        health: int,
+    ) -> None:
+        super().__init__(name, cost, rarity)
+
+        if not isinstance(attack, int) or attack <= 0:
+            raise ValueError("attack must be a positive integer")
+        if not isinstance(health, int) or health <= 0:
+            raise ValueError("health must be a positive integer")
+
+        self.attack_power = attack
+        self.health = health
+        self.rating = 1200
+        self.wins = 0
+        self.losses = 0
+
+    def play(self, game_state: dict) -> dict:
+        return {
+            "card_played": self.name,
+            "mana_used": self.cost,
+            "effect": f"{self.name} enters the tournament arena!",
+        }
+
+    def attack(self, target) -> dict:
+        target_response = target.defend(self.attack_power)
+        return {
+            "attacker": self.name,
+            "target": target.name,
+            "damage": self.attack_power,
+            "combat_type": "melee",
+            "target_result": target_response,
+        }
+
+    def defend(self, incoming_damage: int) -> dict:
+        if not isinstance(incoming_damage, int) or incoming_damage < 0:
+            raise ValueError("incoming_damage must be a non-negative integer")
+
+        damage_taken = min(self.health, incoming_damage)
+        self.health -= damage_taken
+
+        return {
+            "defender": self.name,
+            "damage_taken": damage_taken,
+            "still_alive": self.health > 0,
+            "health_left": self.health,
+        }
+
+    def get_combat_stats(self) -> dict:
+        return {
+            "attack_power": self.attack_power,
+            "health": self.health,
+        }
+
+    def calculate_rating(self) -> int:
+        return self.rating
+
+    def update_wins(self, wins: int) -> None:
+        if not isinstance(wins, int) or wins < 0:
+            raise ValueError("wins must be a non-negative integer")
+        self.wins += wins
+        self.rating += 16 * wins
+
+    def update_losses(self, losses: int) -> None:
+        if not isinstance(losses, int) or losses < 0:
+            raise ValueError("losses must be a non-negative integer")
+        self.losses += losses
+        self.rating -= 16 * losses
+
+    def get_rank_info(self) -> dict:
+        return {
+            "current_rating": self.rating,
+            "total_wins": self.wins,
+            "total_losses": self.losses,
+        }
+
+    def get_tournament_stats(self) -> dict:
+        stats = self.get_rank_info()
+        stats["card_name"] = self.name
+        return stats
