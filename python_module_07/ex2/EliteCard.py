@@ -25,9 +25,6 @@ class EliteCard(Card, Combatable, Magical):
         self.attack_power = attack_power
         self.health = health
         self.mana_pool = mana_pool
-
-        # Used only to make the demo output closer to the subject example
-        self.base_mana_pool = mana_pool
         self.defense_value = 3
 
     def play(self, game_state: dict) -> dict:
@@ -87,10 +84,9 @@ class EliteCard(Card, Combatable, Magical):
             raise ValueError("amount must be a non-negative integer")
 
         self.mana_pool += amount
-
         return {
             "channeled": amount,
-            "total_mana": self.base_mana_pool + amount,
+            "total_mana": self.mana_pool,
         }
 
     def get_magic_stats(self) -> dict:
