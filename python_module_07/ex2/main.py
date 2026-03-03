@@ -2,7 +2,7 @@ from ex2.EliteCard import EliteCard
 
 
 def main() -> None:
-    print("=== DataDeck Ability System ===")
+    print("\n=== DataDeck Ability System ===\n")
 
     elite = EliteCard(
         "Arcane Warrior",
@@ -17,13 +17,13 @@ def main() -> None:
     print("- Card:", ["play", "get_card_info", "is_playable"])
     print("- Combatable:", ["attack", "defend", "get_combat_stats"])
     print("- Magical:", ["cast_spell", "channel_mana", "get_magic_stats"])
-
+    print()
     print("Playing Arcane Warrior (Elite Card):")
-
+    print()
     print("Combat phase:")
     print("Attack result:", elite.attack("Enemy"))
     print("Defense result:", elite.defend(2))
-
+    print()
     print("Magic phase:")
 
     spell_elite = EliteCard(
@@ -46,7 +46,7 @@ def main() -> None:
         mana_pool=4,
     )
     print("Mana channel:", mana_elite.channel_mana(3))
-
+    print()
     print("Multiple interface implementation successful!")
 
 
