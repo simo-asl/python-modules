@@ -1,4 +1,47 @@
+from typing import List, Set, Type
+
+from ex0.Card import Card
+from ex2.Combatable import Combatable
 from ex2.EliteCard import EliteCard
+from ex2.Magical import Magical
+
+
+def _methods_defined_on(
+    cls: Type[object],
+    *,
+    exclude: Set[str] | None = None,
+) -> List[str]:
+    """
+    Returns method names defined directly on `cls` (not inherited),
+    preserving definition order via cls.__dict__ (insertion-ordered).
+    """
+    exclude = exclude or set()
+    methods: List[str] = []
+
+    for name, value in cls.__dict__.items():
+        if name.startswith("__"):
+            continue
+        if name in exclude:
+            continue
+        if callable(value):
+            methods.append(name)
+
+    return methods
+
+
+def _capabilities_for_base(
+    impl_cls: Type[object],
+    base_cls: Type[object],
+    *,
+    exclude: Set[str] | None = None,
+) -> List[str]:
+    """
+    Uses MRO to ensure `base_cls` is part of the implementation ancestry,
+    then returns methods defined on that base interface/class.
+    """
+    if base_cls not in impl_cls.mro():
+        return []
+    return _methods_defined_on(base_cls, exclude=exclude)
 
 
 def main() -> None:
@@ -14,9 +57,10 @@ def main() -> None:
     )
 
     print("EliteCard capabilities:")
-    print("- Card:", ["play", "get_card_info", "is_playable"])
-    print("- Combatable:", ["attack", "defend", "get_combat_stats"])
-    print("- Magical:", ["cast_spell", "channel_mana", "get_magic_stats"])
+    print("- Card:", _capabilities_for_base(EliteCard, Card,
+          exclude={"__init__"}))
+    print("- Combatable:", _capabilities_for_base(EliteCard, Combatable))
+    print("- Magical:", _capabilities_for_base(EliteCard, Magical))
     print()
     print("Playing Arcane Warrior (Elite Card):")
     print()
