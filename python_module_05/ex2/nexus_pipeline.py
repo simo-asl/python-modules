@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
-from typing import Any, List, Dict, Union, Optional, Protocol
+from typing import (Any, List, Dict,
+                    Union, Optional, Protocol, runtime_checkable)
 from time import time
 
 
+@runtime_checkable
 class ProcessingStage(Protocol):
     def process(self, data: Any) -> Any:
         pass
@@ -349,5 +351,6 @@ if __name__ == '__main__':
         malformed_csv = "fname, lname, age"
         system_manager.process_data({'format': 'csv', 'data': malformed_csv})
         print("\nNexus Integration complete. All systems operational.")
+        print(isinstance(data_transformer, ProcessingStage))
     except Exception as e:
         print(e)
