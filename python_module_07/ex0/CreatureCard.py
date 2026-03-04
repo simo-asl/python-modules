@@ -12,7 +12,7 @@ class CreatureCard(Card):
         self.attack = attack
         self.health = health
 
-    def attack_target(self, target) -> dict:
+    def attack_target(self, target: str) -> dict:
         return {
                 "attacker": self.name,
                 "target": target,

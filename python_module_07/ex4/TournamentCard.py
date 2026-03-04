@@ -32,7 +32,7 @@ class TournamentCard(Card, Combatable, Rankable):
             "effect": f"{self.name} enters the tournament arena!",
         }
 
-    def attack(self, target) -> dict:
+    def attack(self, target: "TournamentCard") -> dict:
         target_response = target.defend(self.attack_power)
         return {
             "attacker": self.name,

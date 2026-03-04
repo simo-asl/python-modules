@@ -34,7 +34,7 @@ class EliteCard(Card, Combatable, Magical):
             "effect": "Elite creature enters play (combat + magic enabled)",
         }
 
-    def attack(self, target) -> dict:
+    def attack(self, target: str) -> dict:
         return {
             "attacker": self.name,
             "target": target,
