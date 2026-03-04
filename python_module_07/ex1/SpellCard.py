@@ -1,4 +1,13 @@
+from enum import Enum
+
 from ex0.Card import Card
+
+
+class SpellEffectType(Enum):
+    DAMAGE = "damage"
+    HEAL = "heal"
+    BUFF = "buff"
+    DEBUFF = "debuff"
 
 
 class SpellCard(Card):
@@ -9,7 +18,8 @@ class SpellCard(Card):
         if not isinstance(effect_type, str) or not effect_type.strip():
             raise ValueError("Effect type must be a non-empty string")
 
-        self.effect_type: str = effect_type.strip().lower()
+        normalized_effect = effect_type.strip().lower()
+        self.effect_type: str = normalized_effect
 
         if not self._validate_effect_type():
             raise ValueError(
@@ -17,15 +27,15 @@ class SpellCard(Card):
             )
 
     def _validate_effect_type(self) -> bool:
-        allowed = {"damage", "heal", "buff", "debuff"}
+        allowed = {effect.value for effect in SpellEffectType}
         return self.effect_type in allowed
 
     def play(self, game_state: dict) -> dict:
         effect_map = {
-            "damage": "Deal 3 damage to target",
-            "heal": "Restore 3 health to target",
-            "buff": "Increase target stats",
-            "debuff": "Reduce target stats",
+            SpellEffectType.DAMAGE.value: "Deal 3 damage to target",
+            SpellEffectType.HEAL.value: "Restore 3 health to target",
+            SpellEffectType.BUFF.value: "Increase target stats",
+            SpellEffectType.DEBUFF.value: "Reduce target stats",
         }
 
         return {
