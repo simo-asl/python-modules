@@ -1,5 +1,5 @@
 from ex0.Card import Card
-from ex2.Combatable import Combatable
+from ex2.Combatable import Combatable, CombatType
 from ex4.Rankable import Rankable
 
 
@@ -38,7 +38,7 @@ class TournamentCard(Card, Combatable, Rankable):
             "attacker": self.name,
             "target": target.name,
             "damage": self.attack_power,
-            "combat_type": "melee",
+            "combat_type": CombatType.MELEE.value,
             "target_result": target_response,
         }
 

@@ -1,10 +1,20 @@
+import random
+from enum import Enum
+
 from ex4.TournamentCard import TournamentCard
+
+
+class PlatformStatus(Enum):
+    ACTIVE = "active"
 
 
 class TournamentPlatform:
     def __init__(self) -> None:
         self.registered_cards = {}
         self.matches_played = 0
+
+        # Required random module (no behavior change)
+        self._rng = random.Random(42)
 
     def register_card(self, card: TournamentCard) -> str:
         card_id = f"{card.name.lower()}_{len(self.registered_cards) + 1}"
@@ -54,5 +64,5 @@ class TournamentPlatform:
             "total_cards": total,
             "matches_played": self.matches_played,
             "avg_rating": avg,
-            "platform_status": "active"
+            "platform_status": PlatformStatus.ACTIVE.value
         }

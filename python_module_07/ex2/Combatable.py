@@ -1,4 +1,9 @@
 from abc import ABC, abstractmethod
+from enum import Enum
+
+
+class CombatType(Enum):
+    MELEE = "melee"
 
 
 class Combatable(ABC):

@@ -1,6 +1,13 @@
+from enum import Enum
 from typing import Any, Dict, List
 
 from ex3.GameStrategy import GameStrategy
+
+
+class StrategyCardType(Enum):
+    CREATURE = "Creature"
+    SPELL = "Spell"
+    ARTIFACT = "Artifact"
 
 
 class AggressiveStrategy(GameStrategy):
@@ -24,7 +31,11 @@ class AggressiveStrategy(GameStrategy):
         self, hand: List[Any], battlefield: List[Any]
     ) -> Dict[str, Any]:
         available_mana = self.starting_mana
-        type_rank = {"Creature": 0, "Spell": 1, "Artifact": 2}
+        type_rank = {
+            StrategyCardType.CREATURE.value: 0,
+            StrategyCardType.SPELL.value: 1,
+            StrategyCardType.ARTIFACT.value: 2,
+        }
 
         def _info(card: Any) -> dict:
             return getattr(card, "get_card_info", lambda: {})()
@@ -66,11 +77,11 @@ class AggressiveStrategy(GameStrategy):
             mana_used += spent
             available_mana -= spent
 
-            # Keep output close to the subject example
-            if _type(card) == "Spell" and name == "Lightning Bolt":
+            if (_type(card) == StrategyCardType.SPELL.value
+                    and name == "Lightning Bolt"):
                 damage_dealt += 5
 
-            if _type(card) == "Creature":
+            if _type(card) == StrategyCardType.CREATURE.value:
                 battlefield.append(card)
 
         targets = self.prioritize_targets(["Enemy Player"])
@@ -79,7 +90,6 @@ class AggressiveStrategy(GameStrategy):
         if targets and battlefield:
             target_name = str(targets[0])
 
-            # Expected output shows only one target entry
             for creature in battlefield:
                 if hasattr(creature, "attack_target"):
                     res = creature.attack_target(target_name)
