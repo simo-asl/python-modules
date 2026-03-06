@@ -1,0 +1,29 @@
+[project]
+
+name = "ex1"
+
+version = "0.1.0"
+
+description = ""
+
+authors = [
+    {name = "mel-asla",email = "mel-asla@student.1337.ma"}
+]
+
+requires-python = ">=3.10"
+
+dependencies = [
+    "pandas",
+    "numpy",
+    "requests",
+    "matplotlib"
+]
+
+
+[tool.poetry]
+package-mode = false
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
