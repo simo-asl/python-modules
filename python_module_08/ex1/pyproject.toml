@@ -1,28 +1,16 @@
-[project]
-
-name = "ex1"
-
-version = "0.1.0"
-
-description = ""
-
-authors = [
-    {name = "mel-asla",email = "mel-asla@student.1337.ma"}
-]
-
-requires-python = ">=3.10"
-
-dependencies = [
-    "pandas",
-    "numpy",
-    "requests",
-    "matplotlib"
-]
-
-
 [tool.poetry]
+name = "ex1"
+version = "0.1.0"
+description = ""
+authors = ["mel-asla <mel-asla@student.1337.ma>"]
 package-mode = false
 
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+pandas = ">=2.1.0"
+numpy = ">=1.26.0"
+matplotlib = ">=3.7.2"
+requests = ">=2.31.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
