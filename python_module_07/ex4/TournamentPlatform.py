@@ -12,8 +12,6 @@ class TournamentPlatform:
     def __init__(self) -> None:
         self.registered_cards = {}
         self.matches_played = 0
-
-        # Required random module (no behavior change)
         self._rng = random.Random(42)
 
     def register_card(self, card: TournamentCard) -> str:
