@@ -1,61 +1,102 @@
-from ex0.CreatureCard import CreatureCard
+from ex0.Card import Card
 from ex2.Combatable import Combatable, CombatType
 from ex2.Magical import Magical
 
 
-class EliteCard(CreatureCard, Combatable, Magical):
-    def __init__(self, name: str, cost: int, rarity: str, attack: int,
-                 health: int, mana_capacity: int) -> None:
-        super().__init__(name, cost, rarity, attack, health)
-        self.max_mana = mana_capacity
-        self.current_mana = mana_capacity
+class EliteCard(Card, Combatable, Magical):
+    def __init__(
+        self,
+        name: str,
+        cost: int,
+        rarity: str,
+        attack_power: int,
+        health: int,
+        mana_pool: int = 0,
+    ) -> None:
+        super().__init__(name, cost, rarity)
+
+        if not isinstance(attack_power, int) or attack_power <= 0:
+            raise ValueError("attack_power must be a positive integer")
+        if not isinstance(health, int) or health <= 0:
+            raise ValueError("health must be a positive integer")
+        if not isinstance(mana_pool, int) or mana_pool < 0:
+            raise ValueError("mana_pool must be a non-negative integer")
+
+        self.attack_power = attack_power
+        self.health = health
+        self.mana_pool = mana_pool
+        self.defense_value = 3
+
+    def play(self, game_state: dict) -> dict:
+        return {
+            "card_played": self.name,
+            "mana_used": self.cost,
+            "effect": "Elite creature enters play (combat + magic enabled)",
+        }
 
     def attack(self, target: str) -> dict:
         return {
             "attacker": self.name,
             "target": target,
-            "damage_dealt": self.attack,
-            "combat_type": CombatType.MELEE.value
+            "damage": self.attack_power,
+            "combat_type": CombatType.MELEE.value,
         }
 
     def defend(self, incoming_damage: int) -> dict:
-        damage_taken = incoming_damage
+        if not isinstance(incoming_damage, int) or incoming_damage < 0:
+            raise ValueError("incoming_damage must be a non-negative integer")
+
+        damage_taken = min(self.health, incoming_damage)
         self.health -= damage_taken
+
         return {
             "defender": self.name,
             "damage_taken": damage_taken,
-            "remaining_health": self.health,
-            "survived": self.health > 0
+            "damage_blocked": self.defense_value,
+            "still_alive": self.health > 0,
         }
 
     def get_combat_stats(self) -> dict:
         return {
-            "attack": self.attack,
+            "attack_power": self.attack_power,
             "health": self.health,
-            "mana": self.current_mana
         }
 
     def cast_spell(self, spell_name: str, targets: list) -> dict:
-        spell_cost = len(targets)
+        if not isinstance(spell_name, str) or not spell_name.strip():
+            raise ValueError("spell_name must be a non-empty string")
+        if not isinstance(targets, list):
+            raise ValueError("targets must be a list")
 
-        if self.current_mana < spell_cost:
-            return {
-                "caster": self.name,
-                "spell": spell_name,
-                "error": "Not enough mana"
-            }
+        mana_cost = 4
+        mana_used = min(self.mana_pool, mana_cost)
+        self.mana_pool -= mana_used
 
-        self.current_mana -= spell_cost
         return {
             "caster": self.name,
             "spell": spell_name,
             "targets": targets,
-            "mana_used": spell_cost,
-            "remaining_mana": self.current_mana
+            "mana_used": mana_used,
         }
 
-    def restore_mana(self, amount: int) -> int:
-        self.current_mana += amount
-        if self.current_mana > self.max_mana:
-            self.current_mana = self.max_mana
-        return self.current_mana
+    def channel_mana(self, amount: int) -> dict:
+        if not isinstance(amount, int) or amount < 0:
+            raise ValueError("amount must be a non-negative integer")
+
+        self.mana_pool += amount
+        return {
+            "channeled": amount,
+            "total_mana": self.mana_pool,
+        }
+
+    def get_magic_stats(self) -> dict:
+        return {
+            "mana_pool": self.mana_pool,
+        }
+
+    def get_card_info(self) -> dict:
+        info = super().get_card_info()
+        info["attack_power"] = self.attack_power
+        info["health"] = self.health
+        info["mana_pool"] = self.mana_pool
+        return info
