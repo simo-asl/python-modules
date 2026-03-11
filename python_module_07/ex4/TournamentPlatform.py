@@ -1,6 +1,6 @@
 import random
 from enum import Enum
-
+from typing import Any, Dict, List
 from ex4.TournamentCard import TournamentCard
 
 
@@ -19,7 +19,7 @@ class TournamentPlatform:
         self.registered_cards[card_id] = card
         return card_id
 
-    def create_match(self, card1_id: str, card2_id: str) -> dict:
+    def create_match(self, card1_id: str, card2_id: str) -> Dict[str, Any]:
         self.matches_played += 1
 
         card1 = self.registered_cards[card1_id]
@@ -45,12 +45,12 @@ class TournamentPlatform:
             "loser_rating": loser.rating
         }
 
-    def get_leaderboard(self) -> list:
+    def get_leaderboard(self) -> List[Dict[str, Any]]:
         leader = sorted(self.registered_cards.values(),
                         key=lambda card: card.rating, reverse=True)
         return [card.get_tournament_stats() for card in leader]
 
-    def generate_tournament_report(self) -> dict:
+    def generate_tournament_report(self) -> Dict[str, Any]:
         total = len(self.registered_cards)
 
         if total > 0:
