@@ -1,5 +1,5 @@
 from enum import Enum
-
+from typing import Any, Dict, List
 from ex0.Card import Card
 
 
@@ -30,7 +30,7 @@ class SpellCard(Card):
         allowed = {effect.value for effect in SpellEffectType}
         return self.effect_type in allowed
 
-    def play(self, game_state: dict) -> dict:
+    def play(self, game_state: Dict[str, Any]) -> Dict[str, Any]:
         effect_map = {
             SpellEffectType.DAMAGE.value: "Deal 3 damage to target",
             SpellEffectType.HEAL.value: "Restore 3 health to target",
@@ -44,7 +44,7 @@ class SpellCard(Card):
             "effect": effect_map[self.effect_type],
         }
 
-    def resolve_effect(self, targets: list) -> dict:
+    def resolve_effect(self, targets: List[Any]) -> Dict[str, Any]:
         return {
             "spell": self.name,
             "effect_type": self.effect_type,
