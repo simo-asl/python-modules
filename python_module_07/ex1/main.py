@@ -5,8 +5,8 @@ from ex1.Deck import Deck
 
 
 def main() -> None:
-    print("=== DataDeck Deck Builder ===")
-    print("Building deck with different card types...\n")
+    print("\n=== DataDeck Deck Builder ===\n")
+    print("Building deck with different card types...")
 
     deck = Deck()
 
@@ -17,7 +17,7 @@ def main() -> None:
     deck.add_card(CreatureCard("Fire Dragon", 5, "Legendary", 7, 5))
 
     print("Deck stats:", deck.get_deck_stats())
-    print("Drawing and playing cards:")
+    print("\nDrawing and playing cards:\n")
 
     while True:
         try:
@@ -27,7 +27,7 @@ def main() -> None:
 
         card_type = card.__class__.__name__.replace("Card", "")
         print(f"Drew: {card.name} ({card_type})")
-        print("Play result:", card.play({}))
+        print(f"Play result: {card.play({})}\n")
 
     print("Polymorphism in action: Same interface, different card behaviors!")
 
