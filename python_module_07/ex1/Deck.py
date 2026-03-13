@@ -51,6 +51,6 @@ class Deck:
             elif card_type == "ArtifactCard":
                 stats["artifacts"] += 1
 
-        stats["avg_cost"] = total_cost / len(self.cards)
+        stats["avg_cost"] = round(total_cost / len(self.cards) + 1, 1)
 
         return stats
