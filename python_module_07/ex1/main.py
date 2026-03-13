@@ -15,7 +15,7 @@ def main() -> None:
         ArtifactCard("Mana Crystal", 2, "Rare", 3, "+1 mana per turn")
     )
     deck.add_card(CreatureCard("Fire Dragon", 5, "Legendary", 7, 5))
-
+    deck.shuffle()
     print("Deck stats:", deck.get_deck_stats())
     print("\nDrawing and playing cards:\n")
 
