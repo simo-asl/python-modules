@@ -25,7 +25,7 @@ class SpaceStation(BaseModel):
                                  )
 
 
-def func() -> None:
+def main() -> None:
     print("Space Station Data Validation")
     print("=" * 40)
 
@@ -66,10 +66,10 @@ def func() -> None:
         )
         invalid_station.name
 
-    except ValidationError as e:
-        for err in e.errors():
+    except ValidationError as error:
+        for err in error.errors():
             print(f"{err['msg']}")
 
 
 if __name__ == "__main__":
-    func()
+    main()
