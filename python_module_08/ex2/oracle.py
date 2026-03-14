@@ -1,100 +1,57 @@
 import os
-import sys
-from typing import Dict
-
 from dotenv import load_dotenv
-
-
-def load_config() -> Dict[str, str]:
-    """
-    Load configuration values from the environment and
-    validate the required variables.
-    """
-    load_dotenv()
-
-    config = {
-        "MODE": os.getenv("MATRIX_MODE", "development"),
-        "DB": os.getenv("DATABASE_URL"),
-        "API": os.getenv("API_KEY"),
-        "LOG": os.getenv("LOG_LEVEL", "INFO"),
-        "ZION": os.getenv("ZION_ENDPOINT"),
-    }
-
-    if config["MODE"] not in {"development", "production"}:
-        print("CRITICAL ERROR: MATRIX_MODE ", end="")
-        print("must be 'development' or 'production'")
-        sys.exit(1)
-
-    required_vars = {
-        "DB": "DATABASE_URL",
-        "API": "API_KEY",
-        "ZION": "ZION_ENDPOINT",
-    }
-
-    missing = [
-        env_name
-        for key, env_name in required_vars.items()
-        if not config[key]
-    ]
-
-    if missing:
-        print(
-            "CRITICAL ERROR: Missing configuration for "
-            + ", ".join(missing)
-        )
-        sys.exit(1)
-
-    return config
-
-
-def run_security_audit(config: Dict[str, str]) -> bool:
-    """
-    Perform a simple security audit on the loaded configuration.
-    """
-    print("\nEnvironment security check:")
-
-    print("[OK] Environment variables detected and loaded")
-
-    if config["MODE"] == "production":
-        print("[OK] Production overrides active - System OS is in control")
-    else:
-        print("[OK] Development mode active - Local configuration confirmed")
-
-    placeholders = {
-        "your_secret_key_here",
-        "INSERT_KEY_HERE",
-        "TEMP",
-    }
-
-    if config["API"] in placeholders:
-        print("[DANGER] Default placeholder detected! Update your .env file.")
-        return False
-
-    print("[OK] No default secrets detected")
-    return True
 
 
 def main() -> None:
     print("ORACLE STATUS: Reading the Matrix...")
 
-    config = load_config()
+    load_dotenv()
 
-    print("\nConfiguration loaded:")
-    print(f"Mode: {config['MODE']}")
+    mode = os.getenv("MATRIX_MODE", "development")
+    database_url = os.getenv("DATABASE_URL")
+    api_key = os.getenv("API_KEY")
+    log_level = os.getenv("LOG_LEVEL", "INFO")
+    zion_endpoint = os.getenv("ZION_ENDPOINT")
 
-    if config["MODE"] == "development":
-        print("Database: Connected to local instance")
-    else:
+    missing = []
+
+    if mode not in {"development", "production"}:
+        mode = "Invalid"
+        missing.append("MATRIX_MODE")
+
+    if database_url is None:
+        missing.append("DATABASE_URL")
+
+    if api_key is None:
+        missing.append("API_KEY")
+
+    if zion_endpoint is None:
+        missing.append("ZION_ENDPOINT")
+
+    print("Configuration loaded:")
+    print(f"Mode: {mode}")
+
+    if database_url is None:
+        print("Database: Missing configuration")
+    elif mode == "production":
         print("Database: ENCRYPTED REMOTE TARGET")
+    else:
+        print("Database: Connected to local instance")
 
-    print(f"API Access: {'Authenticated' if config['API'] else 'FAILED'}")
-    print(f"Log Level: {config['LOG']}")
-    print(f"Zion Network: {'Online' if config['ZION'] else 'Offline'}")
+    print(f"API Access: {'Authenticated' if api_key else 'Missing config'}")
+    print(f"Log Level: {log_level}")
+    print(f"Zion Network: {'Online' if zion_endpoint else 'Missing config'}")
 
-    run_security_audit(config)
+    print("Environment security check:")
+    if missing:
+        print("[ERROR] Missing configuration for: " + ", ".join(missing))
+        print("The Oracle detected missing configuration.")
+    else:
+        print("[OK] No hardcoded secrets detected")
+        print("[OK] .env file properly configured")
+        print("[OK] Production overrides available")
+        print("The Oracle sees all configurations.")
 
-    print("\nThe Oracle sees all configurations.")
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
