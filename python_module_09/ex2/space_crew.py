@@ -1,16 +1,16 @@
-from datetime import datetime
-from enum import Enum
-from typing import Self
-
 from pydantic import BaseModel, Field, ValidationError, model_validator
+from enum import Enum
+from datetime import datetime
+
+from typing import Self
 
 
 class Rank(str, Enum):
-    cadet = "cadet"
-    officer = "officer"
-    lieutenant = "lieutenant"
-    captain = "captain"
-    commander = "commander"
+    CADET = "cadet"
+    OFFICER = "officer"
+    LIEUTENANT = "lieutenant"
+    CAPTAIN = "captain"
+    COMMANDER = "commander"
 
 
 class CrewMember(BaseModel):
@@ -42,7 +42,7 @@ class SpaceMission(BaseModel):
             raise ValueError("All crew members must be active")
 
         if not any(
-            member.rank in (Rank.commander, Rank.captain)
+            member.rank in (Rank.COMMANDER, Rank.CAPTAIN)
             for member in self.crew
         ):
             raise ValueError(
@@ -86,7 +86,7 @@ def main() -> None:
         CrewMember(
             member_id="CM01",
             name="Sarah Connor",
-            rank=Rank.commander,
+            rank=Rank.COMMANDER,
             age=40,
             specialization="Mission Command",
             years_experience=20,
@@ -94,7 +94,7 @@ def main() -> None:
         CrewMember(
             member_id="CM02",
             name="John Smith",
-            rank=Rank.lieutenant,
+            rank=Rank.LIEUTENANT,
             age=38,
             specialization="Navigation",
             years_experience=18,
@@ -102,7 +102,7 @@ def main() -> None:
         CrewMember(
             member_id="CM03",
             name="Alice Johnson",
-            rank=Rank.officer,
+            rank=Rank.OFFICER,
             age=35,
             specialization="Engineering",
             years_experience=9,
@@ -133,7 +133,7 @@ def main() -> None:
         CrewMember(
             member_id="CM01",
             name="Sarah Connor",
-            rank=Rank.officer,
+            rank=Rank.OFFICER,
             age=40,
             specialization="Mission Command",
             years_experience=20,
@@ -141,7 +141,7 @@ def main() -> None:
         CrewMember(
             member_id="CM02",
             name="John Smith",
-            rank=Rank.lieutenant,
+            rank=Rank.LIEUTENANT,
             age=38,
             specialization="Navigation",
             years_experience=18,
@@ -149,7 +149,7 @@ def main() -> None:
         CrewMember(
             member_id="CM03",
             name="Alice Johnson",
-            rank=Rank.officer,
+            rank=Rank.OFFICER,
             age=35,
             specialization="Engineering",
             years_experience=9,
