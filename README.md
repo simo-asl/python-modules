@@ -2,8 +2,11 @@
 
 # Python Learning Journey (Modules 00 -> 10)
 
+<p align="center">
+	<img src="https://cdn.simpleicons.org/42/000000" alt="42 Logo" width="220" />
+</p>
+
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Curriculum](https://img.shields.io/badge/42-Curriculum-000000?style=for-the-badge&logo=42&logoColor=white)
 ![Progress](https://img.shields.io/badge/Modules-00--10-1E9E63?style=for-the-badge)
 ![Focus](https://img.shields.io/badge/Focus-Learning%20by%20Building-E67E22?style=for-the-badge)
 ![Topics](https://img.shields.io/badge/OOP%20%7C%20Validation%20%7C%20Functional%20Programming-8E44AD?style=for-the-badge)
