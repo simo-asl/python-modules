@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by mel-asla.*
+*These modules have been created as part of the 42 curriculum by mel-asla.*
 
 # Python Learning Journey (Modules 00 -> 10)
 
